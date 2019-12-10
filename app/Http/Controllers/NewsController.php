@@ -7,28 +7,38 @@ use App\Http\Requests\CreateNewsRequest;
 use Illuminate\Support\Facades\Auth;
 use App\News;
 use App\Image;
+use Image as Imagick;
 
 class NewsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth'])->except(['index', 'show']);
+        $this->middleware(['auth'])->except(['index', 'show', 'search']);
     }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($tag = null)
     {
-        $allNews = News::orderBy('updated_at', 'desc')->paginate(9);
+        $allNews = $this->getNews($tag);
 
         return view('news.index', compact('allNews'));
     }
 
     public function myNews()
     {
-        $allNews = Auth::user()->news;
+        $allNews = Auth::user()->news()->orderBy('updated_at', 'desc')->paginate(6);
+
+        return view('news.my-news', compact('allNews'));
+    }
+
+    public function search(Request $request)
+    {
+        $allNews = News::where('title', 'like', "%$request->word%")
+                        ->orderBy('updated_at', 'desc')
+                        ->paginate(6);
 
         return view('news.index', compact('allNews'));
     }
@@ -52,6 +62,7 @@ class NewsController extends Controller
     public function store(CreateNewsRequest $request)
     {
         $path = str_replace('public', '/storage', $request->file('image')->store('public/images'));
+        $tags = explode(",", $request->tags);
 
         $image = Image::create([
             'path' => $path
@@ -66,6 +77,7 @@ class NewsController extends Controller
             'content' => $request->content,
         ]);
         $post->save();
+        $post->tag($tags);
 
         return redirect()->route('news.index');
     }
@@ -87,9 +99,14 @@ class NewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(News $news)
     {
-        //
+        $tags = '';
+        foreach ($news->tags as $tag) {
+            $tags .= $tag->name . ',';
+        }
+        return view('news.edit', compact('news', 'tags'));
+
     }
 
     /**
@@ -99,9 +116,23 @@ class NewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CreateNewsRequest $request, News $news)
     {
-        //
+        $path = str_replace('public', '/storage', $request->file('image')->store('public/images'));
+        $tags = explode(",", $request->tags);
+
+        $news->image->path = $path;
+        $news->image->save();
+
+        $post->fill([
+            'title' => $request->title,
+            'description' => $request->description,
+            'content' => $request->content,
+        ]);
+        $post->save();
+        $post->retag($tags);
+
+        return redirect()->route('my-news');
     }
 
     /**
@@ -113,5 +144,13 @@ class NewsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    private function getNews($tag)
+    {
+        if ($tag) {
+            return News::withAnyTag([$tag])->orderBy('updated_at', 'desc')->paginate(3);
+        }
+        return News::orderBy('updated_at', 'desc')->paginate(3);
     }
 }

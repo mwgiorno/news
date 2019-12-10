@@ -8,21 +8,22 @@
             <div class="card">
                 <div class="card-header">Создать новость</div>
                   <div class="">
-                    <img class="card-img-top" src="" id="img">
+                    <img class="card-img-top" src="{{ $news->image->path ?? '' }}" id="img">
                   </div>
                 <div class="card-body">
-                  <form action="{{ route('news.store') }}" method="post" enctype="multipart/form-data">
+                  <form action="{{ route('news.update', $news) }}" method="post" enctype="multipart/form-data">
                     @csrf
+                    @method('PUT')
 
                     <div class="form-group">
                       <label for="title">Название</label>
-                      <input type="text" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" id="title" placeholder="Введите название новости" name="title" value="{{old('title')}}">
+                      <input type="text" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" id="title" placeholder="Введите название новости" name="title" value="{{ $news->title ?? '' }}">
                       @error('title')
                           <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
                       @enderror
                     </div>
                     <div class="custom-file">
-                       <input type="file" class="form-control{{ $errors->has('image') ? ' is-invalid' : '' }}" id="image" name="image">
+                       <input type="file" class="form-control{{ $errors->has('image') ? ' is-invalid' : '' }}" id="image" name="image" value="{{ $news->image->path ?? '' }}">
                        <label class="custom-file-label" for="image">Прикрепить главное изображение</label>
                        @error('image')
                            <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
@@ -32,7 +33,7 @@
                      <div class="form-group">
                        <br>
                        <label for="description">Описание</label>
-                       <textarea id="description" name="description" rows="8" cols="50" class="form-control"></textarea>
+                       <textarea id="description" name="description" rows="8" cols="50" class="form-control">{{ $news->description ?? '' }}</textarea>
                        @error('description')
                            <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
                        @enderror
@@ -40,7 +41,7 @@
 
                     <div class="form-group">
                       <label for="content">Содержимое</label>
-                      <textarea id="content" name="content" rows="8" cols="50" class="form-control summernote"></textarea>
+                      <textarea id="content" name="content" rows="8" cols="50" class="form-control summernote">{!! $news->content !!}</textarea>
                       @error('content')
                           <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
                       @enderror
@@ -48,13 +49,13 @@
 
                     <div class="form-group">
                       <label for="tags">Tags</label>
-                      <input data-role="tagsinput" type="text" class="form-control{{ $errors->has('tags') ? ' is-invalid' : '' }}" id="tags" name="tags" value="{{old('tags')}}">
+                      <input data-role="tagsinput" type="text" class="form-control{{ $errors->has('tags') ? ' is-invalid' : '' }}" id="tags" name="tags" value="{{ $tags }}">
                       @error('tags')
                           <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
                       @enderror
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Создать</button>
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
                   </form>
                 </div>
             </div>

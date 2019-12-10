@@ -8,12 +8,19 @@ use Carbon\Carbon;
 
 class News extends Model
 {
+    use \Conner\Tagging\Taggable;
+
     protected $dates = [
         'updated_at', 'created_at'
     ];
     protected $fillable = [
         'user_id', 'title', 'content', 'description', 'image_id'
     ];
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 
     public function setTitleAttribute($value)
     {
@@ -39,5 +46,10 @@ class News extends Model
     public function image()
     {
         return $this->belongsTo(Image::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class)->whereNull('parent_id');
     }
 }

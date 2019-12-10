@@ -13,4 +13,6 @@ const mix = require('laravel-mix');
 
 mix.js('resources/js/app.js', 'public/js')
    .sass('resources/sass/app.scss', 'public/css')
-   .sass('resources/sass/summernote.scss', 'public/css');
+   .sass('resources/sass/summernote.scss', 'public/css')
+   .copy('node_modules/summernote/dist/summernote.min.js', 'public/js')
+   .copy('node_modules/font-awesome/css/font-awesome.min.css', 'public/css');
