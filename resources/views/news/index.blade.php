@@ -6,13 +6,13 @@
   <!-- Page Content -->
       <div class="container">
 
-        <div class="row">
+        <div class="row justify-content-center">
 
           <!-- Blog Entries Column -->
           <div class="col-md-8">
 
             <h1 class="my-4">
-              Latest Posts
+              Latest News
             </h1>
 
          @foreach ($allNews as $news)
@@ -47,13 +47,7 @@
           </div>
 
           <!-- Sidebar Widgets Column -->
-          <div class="col-md-4">
-              @include('layouts.search')
-            <!-- Search Widget -->
 
-
-
-            </div>
           </div>
 
         </div>

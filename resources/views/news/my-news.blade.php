@@ -12,7 +12,7 @@
           <div class="col-md-8">
 
             <h1 class="my-4">
-              My Posts
+              My News
             </h1>
 
          @foreach ($allNews as $news)

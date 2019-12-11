@@ -6,7 +6,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Create a post</div>
+                <div class="card-header">Create news</div>
                   <div class="">
                     <img class="card-img-top" src="" id="img">
                   </div>
