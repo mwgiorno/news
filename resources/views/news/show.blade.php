@@ -15,11 +15,11 @@
 
 
             <!-- Date/Time -->
-            <p class="lead"><i class="fa fa-history"></i>  Обновлено:  {{ $news->updated_at }}</p>
+            <p class="lead"><i class="fa fa-history"></i>  Updated:  {{ $news->updated_at }}</p>
 
             <!-- Author -->
             <p class="lead">
-                <i class="fa fa-user"></i> Автор: {{ $news->user->name }}
+                <i class="fa fa-user"></i> Author: {{ $news->user->name }}
             </p>
 
 
@@ -32,14 +32,14 @@
             {!! $news->content !!}
 
             <div class="card my-4">
-              <h5 class="card-header">Оставить комментарий:</h5>
+              <h5 class="card-header">Leave comment:</h5>
               <div class="card-body">
                 <form action="{{ route('leave-comment', $news) }}" method="post" id="leaveComment">
                   @csrf
                   <div class="form-group">
                     <textarea class="form-control" rows="3" name="body" id='body'></textarea>
                   </div>
-                  <button type="submit" class="btn btn-primary">Оставить комментарий</button>
+                  <button type="submit" class="btn btn-primary">Leave comment</button>
                 </form>
               </div>
             </div>
@@ -60,7 +60,7 @@
 
             <!-- Categories Widget -->
             <div class="card my-3">
-              <h5 class="card-header">Теги</h5>
+              <h5 class="card-header">Tags</h5>
               <div class="card-body">
                 @foreach ($news->tags as $tag)
                   <a href="{{ route('news.tag', $tag->slug) }}" class="btn btn-primary btn-sm">{{ $tag->name }}</a>

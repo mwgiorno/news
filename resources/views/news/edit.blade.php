@@ -6,7 +6,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Создать новость</div>
+                <div class="card-header">Create post</div>
                   <div class="">
                     <img class="card-img-top" src="{{ $news->image->path ?? '' }}" id="img">
                   </div>
@@ -16,7 +16,7 @@
                     @method('PUT')
 
                     <div class="form-group">
-                      <label for="title">Название</label>
+                      <label for="title">Title</label>
                       <input type="text" class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" id="title" placeholder="Введите название новости" name="title" value="{{ $news->title ?? '' }}">
                       @error('title')
                           <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
@@ -24,7 +24,7 @@
                     </div>
                     <div class="custom-file">
                        <input type="file" class="form-control{{ $errors->has('image') ? ' is-invalid' : '' }}" id="image" name="image" value="{{ $news->image->path ?? '' }}">
-                       <label class="custom-file-label" for="image">Прикрепить главное изображение</label>
+                       <label class="custom-file-label" for="image">Attach a preview image</label>
                        @error('image')
                            <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
                        @enderror
@@ -32,7 +32,7 @@
 
                      <div class="form-group">
                        <br>
-                       <label for="description">Описание</label>
+                       <label for="description">Descrition</label>
                        <textarea id="description" name="description" rows="8" cols="50" class="form-control">{{ $news->description ?? '' }}</textarea>
                        @error('description')
                            <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
@@ -40,7 +40,7 @@
                      </div>
 
                     <div class="form-group">
-                      <label for="content">Содержимое</label>
+                      <label for="content">Content</label>
                       <textarea id="content" name="content" rows="8" cols="50" class="form-control summernote">{!! $news->content !!}</textarea>
                       @error('content')
                           <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
@@ -55,7 +55,7 @@
                       @enderror
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
                   </form>
                 </div>
             </div>

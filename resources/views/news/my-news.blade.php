@@ -12,7 +12,7 @@
           <div class="col-md-8">
 
             <h1 class="my-4">
-              Мои новости
+              My Posts
             </h1>
 
          @foreach ($allNews as $news)
@@ -22,8 +22,8 @@
               <div class="card-body">
                 <h2 class="card-title">{{ $news->title }}</h2>
                 <p class="card-text">{!! $news->description !!}</p>
-                <a href="{{ route('news.show', $news) }}" class="btn btn-primary">Подробнее →</a>
-                <a href="{{ route('news.edit', $news) }}" class="btn btn-primary">Редактировать →</a>
+                <a href="{{ route('news.show', $news) }}" class="btn btn-primary">Read more →</a>
+                <a href="{{ route('news.edit', $news) }}" class="btn btn-primary">Edit →</a>
               </div>
               <div class="card-footer text-muted">
                 <p><i class="fa fa-tags"></i>
